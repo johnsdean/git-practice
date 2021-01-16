@@ -1,1 +1,2 @@
 2nd file's text
+Added 2nd line
