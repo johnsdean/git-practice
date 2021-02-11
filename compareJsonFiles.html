@@ -1,0 +1,57 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="John Dean">
+<title>Compare JSON Files</title>
+<style>
+  .table {display: table;}
+  .row {display: table-row;}
+  .row > * {display: table-cell;}
+  .table {
+    border-spacing: 10px;
+    border: thin solid blue;
+  }
+  .row > :first-child {text-align: right;}
+  #template-warning, #target-warning, #comparison-warning {
+    color: red;
+  }
+</style>
+<script src="compareJsonFiles.js"></script>
+</head>
+
+<!-- <body onload ="initialize();"> -->
+<body>
+<h1 class="top">JSON Translation File Comparison</h1>
+<div>
+  Select an en.json file and another translation file
+  (fr.json, es.json, ar.json, etc.).<br>
+  The en.json file serves as the template for the other-language
+  translation file.
+</div>
+<br>
+
+<form class="table" id="myForm">
+  <div class="row">
+    <label for="template">en.json file:</label>
+    <input type="file" id="template" accept=".json"
+      onchange="readFile('template', event);">
+    <span id="template-warning"></span>
+  </div>
+  <div class="row">
+    <label for="target">Other file:</label>
+    <input type="file" id="target" accept=".json"
+      onchange="readFile('target', event);">
+    <span id="target-warning"></span>
+  </div>
+</form>
+<br>
+<div class="bottom">
+  <input type="button" value="Compare Files"
+    onclick="compareFiles(this.form);">
+  <br><br>
+  <output id="comparison-warning" form="myForm"></output>
+  <output id="results" form="myForm"></output>
+</div>
+</body>
+</html>
