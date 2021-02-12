@@ -96,7 +96,7 @@ function readFile(fileType, filePickerEvent) {
 
 //****************************************************
 
-function compareFiles(form) {
+function compareFiles() {
   var warning = ""; // warning message about the comparison
 
   templateJson = targetJson = null;
