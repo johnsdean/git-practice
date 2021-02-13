@@ -16,21 +16,31 @@ function initialize() {
 
 //****************************************************
 
-// This function reads the passed-in file that must be in the
-// same directory as the directory that stores this web page's
-// file.
+// This function reads the user-selected file and checks
+// to make sure its filename is valid and it uses proper
+// JSON syntax.
 
-function readFile(fileType, filePickerEvent) {
+function readFile(form, fileType, filePickerEvent) {
   var file;      // file object from file picker
   var filename;  // lowercase name of file
   var reader;    // for reading a file
   var warning;   // container that displays invalid file input
 
-  document.getElementById("comparison-warning").innerHTML = "";
+  form.elements["findLinesBtn"].disabled = true;
+
+  if (fileType == "template") {
+    warning = document.getElementById("template-warning");
+  }
+  else {
+    warning = document.getElementById("target-warning");
+  }
 
   // If user selects cancel, that will change the file picker's
-  // display to "No file chosen," so need to null the chosen file.
+  // display to "No file chosen," so need to null the chosen file
+  // and clear any warnings.
+  // Selecting cancel causes the file picker to return "".
   if (filePickerEvent.target.value == "") {
+    warning.innerHTML = "";
     if (fileType == "template") {
       templateFile = null;
     }
@@ -43,30 +53,32 @@ function readFile(fileType, filePickerEvent) {
   else {
     file = filePickerEvent.target.files[0];
     filename = file.name.toLowerCase();
-    console.log("filename = " + filename);
 
     if (fileType == "template") {
-      warning = document.getElementById("template-warning");
       if (filename == "en.json") {
         warning.innerHTML = "";
       }
       else {
         templateFile = null;
         warning.innerHTML =
-          "Invalid selection. You must select an en.json file.";
+          "You must select an en.json file.";
       }
     }
 
     // Handle fileType == "target"
     else {
-      warning = document.getElementById("target-warning");
-      if (filename.split(".")[1] == "json") {
-        warning.innerHTML = "";
-      }
-      else {
+      if (filename == "en.json") {
         targetFile = null;
         warning.innerHTML =
-          "Invalid selection. You must select a *.json file.";
+          "You must not select an en.json file.";
+      }
+      else if (filename.split(".")[1] != "json") {
+        targetFile = null;
+        warning.innerHTML =
+          "You must select a *.json file.";
+      }
+      else {
+        warning.innerHTML = "";
       }
     }
 
@@ -74,16 +86,39 @@ function readFile(fileType, filePickerEvent) {
       reader = new FileReader();
       reader.readAsText(file, "UTF-8");
 
-      // Add a filename property so the onload event handler can know
-      // which file is being read.
+      // Add a filename property so the onload event handler can
+      // know which file is being read.
       reader.filename = filename;
 
+      // The file can be parsed only after it has loaded, which
+      // takes some time. Thus the callback mechanism...
       reader.onload = function (readerEvent) {
         if (readerEvent.target.filename == "en.json") {
           templateFile = readerEvent.target;
-        }
+          try {
+            templateJson = JSON.parse(templateFile.result);
+          }
+          catch (err) {
+            templateJson = null;
+            warning.innerHTML =
+              "JSON syntax error in " + templateFile.filename;
+          }
+        } // end if template file
+
         else {
           targetFile = readerEvent.target;
+          try {
+            targetJson = JSON.parse(targetFile.result);
+          }
+          catch (err) {
+            targetJson = null;
+            warning.innerHTML =
+              "JSON syntax error in " + targetFile.filename;
+          }
+        } // end else
+
+        if (templateJson != null && targetJson != null) {
+          form.elements["findLinesBtn"].disabled = false;
         }
       } // end reader.onload
 
@@ -96,42 +131,22 @@ function readFile(fileType, filePickerEvent) {
 
 //****************************************************
 
-function compareFiles() {
-  var warning = ""; // warning message about the comparison
-
-  templateJson = targetJson = null;
-
-  if (templateFile == null || targetFile == null) {
-    warning =
-      "You must select valid files before comparing.\n";
+function findLines(form) {
+  // With the button disabled, the files should be valid at
+  // this point and this warning should never be displayed.
+  if (templateJson == null || targetJson == null) {
+    form.elements["message"].value =
+      "You must select valid files before comparing.";
   }
   else {
-    try {
-      templateJson = JSON.parse(templateFile.result);
-    }
-    catch (err) {
-      warning =
-        "JSON syntax error in file " + templateFile.filename;
-    }
-    try {
-      targetJson = JSON.parse(targetFile.result);
-    }
-    catch (err) {
-      if (warning != "") {
-        warning += "<br>";
-      }
-      warning +=
-        "JSON syntax error in file " + targetFile.filename;
-    }
-  } // end else
-
-  document.getElementById("comparison-warning").innerHTML =
-    warning;
-
-  if (templateJson != null && targetJson != null) {
-    displayMissingLines();
+    form.elements["message"].value =
+      "Here are the en.json lines (with key numbers inserted" +
+      " at the left) whose keys are missing in the " +
+      targetFile.filename + " file:"
+    form.elements["results"].style.display = "block";
+    displayMissingLines(form);
   }
-} // end compareFiles
+} // end findLines
 
 //****************************************************
 
@@ -140,26 +155,38 @@ function compareFiles() {
 // For each of those missing keys, display the template file's
 // relevant line and preface with the line's number.
 
-function displayMissingLines() {
-  var results;      // container that displays comparison message
+function displayMissingLines(form) {
+  var results;      // container that displays results
   var templateKeys; // keys in template file
   var targetKeys;   // keys in target file
   var missingLines; // lines in template that are not in target
+  var keyNum;       // pint the key number for each printed line
 
+  results = form.elements["results"];
   templateKeys = Object.keys(templateJson);
   targetKeys = Object.keys(targetJson);
   missingLines = "";
 
-  results = document.getElementById("results");
+  keyNum = 0;
 
   templateKeys.forEach(
     function(key) {
+      keyNum++;
       if (targetKeys.indexOf(key) == -1) {
-        line = "  \"" + key + "\": \"" + templateJson[key] + "\",<br>";
+        // Build a key-value line with key number at start
+        // and newline at the end.
+        line = keyNum.toString().padEnd(6) +
+          "\"" + key + "\": \"" + templateJson[key] +
+          "\",\n";
         missingLines += line;
       }
     }
   );
 
-  results.innerHTML = missingLines;
+  if (missingLines == "") {
+    results.value = "There are no missing lines.";
+  }
+  else {
+    results.value = missingLines;
+  }
 } // end displayMissingLines

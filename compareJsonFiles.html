@@ -13,8 +13,11 @@
     border: thin solid blue;
   }
   .row > :first-child {text-align: right;}
-  #template-warning, #target-warning, #comparison-warning {
+  #template-warning, #target-warning {
     color: red;
+  }
+  #results {
+    display: none; white-space: pre;
   }
 </style>
 <script src="compareJsonFiles.js"></script>
@@ -35,23 +38,33 @@
   <div class="row">
     <label for="template">en.json file:</label>
     <input type="file" id="template" accept=".json"
-      onchange="readFile('template', event);">
+      onchange="readFile(this.form, 'template', event);">
     <span id="template-warning"></span>
   </div>
   <div class="row">
     <label for="target">Other file:</label>
     <input type="file" id="target" accept=".json"
-      onchange="readFile('target', event);">
+      onchange="readFile(this.form, 'target', event);">
     <span id="target-warning"></span>
   </div>
 </form>
 <br>
 <div class="bottom">
-  <input type="button" value="Compare Files"
-    onclick="compareFiles();">
+  <input type="button" value="Find missing lines"
+    id="findLinesBtn" disabled
+    form="myForm" onclick="findLines(this.form);">
   <br><br>
-  <output id="comparison-warning" form="myForm"></output>
-  <output id="results" form="myForm"></output>
+  <output id="message" form="myForm"></output>
+  <br><br>
+  <textarea id="results" form="myForm"
+    readonly rows="10" cols="100"></textarea>
+  <!--
+  <br><br>
+  <input type="button"
+    value="Make copy of #.json with missing lines inserted"
+    id="makeCopy" disabled
+    form="myForm" onclick="makeCopy(this.form);">
+  -->
 </div>
 </body>
 </html>
