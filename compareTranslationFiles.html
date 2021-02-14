@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="author" content="John Dean">
+<title>Compare JSON Files</title>
+<style>
+  .table {display: table;}
+  .row {display: table-row;}
+  .row > * {display: table-cell;}
+  .table {
+    border-spacing: 10px;
+    border: thin solid blue;
+  }
+  .prompt {text-align: right;}
+  #en-warning, #other-warning {
+    color: red;
+  }
+  #en-results, #other-results, #copied-file {
+    display: none; white-space: pre;
+  }
+</style>
+<script src="compareTranslationFiles.js"></script>
+</head>
+
+<body>
+<h1 class="top">JSON Translation File Comparison</h1>
+<div>
+  Select an en.json file and another translation file
+  (fr.json, es.json, ar.json, etc.).<br>
+  The en.json file serves as the template for the other-language
+  translation file.
+</div>
+<br>
+
+<!-- Put remaining elements in one form to make access easier
+  and more effecient. -->
+<form>
+<div class="table">
+  <div class="row">
+    <label class="prompt" for="enFile">en.json file:</label>
+    <span>
+      <input type="file" id="en-file" accept=".json"
+        onchange="readFile(this.form, 'en', event);">
+    </span>
+    <span id="en-warning"></span>
+  </div>
+  <div class="row">
+    <label class="prompt" for="otherFile">Other file:</label>
+    <span>
+      <input type="file" id="other-file" accept=".json"
+        onchange="readFile(this.form, 'other', event);">
+    </span>
+    <span id="other-warning"></span>
+  </div>
+</div>
+<br>
+
+<div class="table">
+  <div class="row">
+    <span>
+      <input type="button" value="Surplus keys in en.json"
+        id="surplus-keys-in-en-btn" disabled
+        onclick="findSurplusKeys(this.form, 'en');">
+    </span>
+    <span>
+      <input type="button" value="Surplus keys in *.json file"
+        id="surplus-keys-in-other-btn" disabled
+        onclick="findSurplusKeys(this.form, 'other');">
+    </span>
+  </div>
+  <div class="row">
+    <output id="en-msg"></output>
+    <output id="other-msg"></output>
+  </div>
+  <div class="row">
+    <span>
+      <textarea id="en-results"
+        readonly rows="10" cols="50"></textarea>
+    </span>
+    <span>
+      <textarea id="other-results"
+        readonly rows="10" cols="50"></textarea>
+    </span>
+  </div>
+</div>
+
+<br>
+<div class="table">
+  <div class="row">
+    <span>
+      <input type="button"
+        value="Make improved copy of *.json file"
+        id="make-copy-btn" disabled
+        onclick="makeCopy(this.form);">
+    </span>
+  </div>
+  <div class="row">
+    <output id="copied-file-msg"></output>
+  </div>
+  <div class="row">
+    <span>
+      <textarea id="copied-file"
+        readonly rows="10" cols="104"></textarea>
+    </span>
+  </div>
+</div>
+</form>
+</body>
+</html>
