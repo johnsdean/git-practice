@@ -130,6 +130,7 @@ function readFile(form, fileType, filePickerEvent) {
         if (readerEvent.target.filename == "en.json") {
           enFile = readerEvent.target;
           try {
+            // JSON.parse removes \'s in keys and values
             enJson = JSON.parse(enFile.result);
           }
           catch (err) {
@@ -142,6 +143,7 @@ function readFile(form, fileType, filePickerEvent) {
         else {
           otherFile = readerEvent.target;
           try {
+            // JSON.parse removes \'s in keys and values
             otherJson = JSON.parse(otherFile.result);
           }
           catch (err) {
@@ -280,14 +282,21 @@ function makeCopy(form) {
         value = otherJson[key];
       }
       else {
+        // start the line with a right arrow character
         content += "\u27A4  ";
         value = enJson[key];
       }
 
+      // JSON.parse removes \'s in keys and values, and now
+      // we have to add them back because in the textarea,
+      // we want to display code that a user can copy as valid JSON.
+      key = key.replace(/"/g, '\\"');
+      value = value.replace(/"/g, '\\"');
+
       content +=
         "\"" + key + "\": \"" + value + "\",\n";
-    } 
-  );
+    }
+  ); // end forEach
 
   // remove trailing comma
   content = content.substring(0, content.length - 2);
