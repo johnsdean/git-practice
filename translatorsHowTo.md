@@ -33,9 +33,9 @@ And you should change that line to this:
 ```
 Note that you should NOT edit the English key, which is the string at the left of the colon. Only change the value, which is the string at the right of the colon.
 
-If you’re creating a brand new translation file, then all of the values will be in English initially, and you’ll replace every value with a translated value.
+If you’re creating a brand new translation file, then all of the values will be in English initially, and you’ll examine every value to see if it should be translated.
 
-If you’re updating an existing translation file, you might need to search every line for values that are in English and then translate those values. But normally, if you’re updating an existing translation file, you’ll be told that the lines that need updating are prefaced with arrows, like this:
+If you’re updating an existing translation file, you might need to examine every value to see if it should be translated. But normally, if you’re updating an existing translation file, you’ll be told that the lines that need updating are prefaced with arrows, like this:
 ```json
 ➤  "LocationSpecificSurveyComponent-STEP_2_Q_FULL_NAME_OF_THE_IMPORTER_OF_GOODS": "Please list the full name of the \"Importer of Record\" ",
 ```
@@ -43,10 +43,8 @@ You should delete the arrow and translate the value. So if you saw the above lin
 ```json
 "LocationSpecificSurveyComponent-STEP_2_Q_FULL_NAME_OF_THE_IMPORTER_OF_GOODS": "Por favor, lista el nombre completo de \"Importador del registro\" ",
 ```
-Sometimes, you might decide that using the original English value is better than trying to translate. For example, for the following line, it’s up to you whether to translate SmartResponse or leave it as is. But either way, delete the arrow at the left:
-```json
-➤  "UNIVERSAL-SMARTRESPONSE": "SmartResponse",
-```
+Sometimes, you might decide that using the original English value is better than trying to translate. If you're unsure, ask. A guideline (not an absolute rule) is that proper nouns should not be translated. For example, SmartResponse, Infoplease, 50States, and City-Data are proper nouns that appear as values, and you should not translate them.
+
 As you know, JSON file syntax includes curly braces (\{\}), quotes, colons, and commas. Those items should be correct in your original file. Try to avoid introducing errors to those items, but if you do so, your JSON editor tool (described below) should be able to identify such errors, so you can correct them.
 
 
