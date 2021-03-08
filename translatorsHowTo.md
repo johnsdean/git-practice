@@ -41,7 +41,7 @@ If you’re updating an existing translation file, you might need to search ever
 ```
 You should delete the arrow and translate the value. So if you saw the above line in the Spanish translation file, you should change it to this:
 ```json
-"LocationSpecificSurveyComponent-STEP_2_Q_FULL_NAME_OF_THE_IMPORTER_OF_GOODS": "Por favor, lista el nombre completo de \"Importer of Record\" ",
+"LocationSpecificSurveyComponent-STEP_2_Q_FULL_NAME_OF_THE_IMPORTER_OF_GOODS": "Por favor, lista el nombre completo de \"Importador del registro\" ",
 ```
 Sometimes, you might decide that using the original English value is better than trying to translate. For example, for the following line, it’s up to you whether to translate SmartResponse or leave it as is. But either way, delete the arrow at the left:
 ```json
