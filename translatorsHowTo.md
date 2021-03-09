@@ -41,7 +41,7 @@ If you’re updating an existing translation file, you might need to examine eve
 ```
 You should delete the arrow and translate the value. So if you saw the above line in the Spanish translation file, you should change it to this:
 ```json
-"LocationSpecificSurveyComponent-STEP_2_Q_FULL_NAME_OF_THE_IMPORTER_OF_GOODS": "Por favor, lista el nombre completo de \"Importador del registro\" ",
+"LocationSpecificSurveyComponent-STEP_2_Q_FULL_NAME_OF_THE_IMPORTER_OF_GOODS": "Por favor, lista el nombre completo de \"importador del registro\" ",
 ```
 Sometimes, you might decide that using the original English value is better than trying to translate. Normally, if a value has a proper noun, you should leave it as is (do not translate the proper noun). But that's a guideline, not an absolute rule. For example, SmartResponse, Infoplease, 50States, and City-Data are proper nouns that appear as values, and you should not translate them. However, Disaster Accountability Project is a proper noun, and you should translate it if you feel a translation would improve readability. If you're unsure about whether to translate, ask.
 
@@ -50,7 +50,7 @@ As you know, JSON file syntax includes curly braces (\{\}), quotes, colons, and 
 
 ## Special Cases to Look For
 
-- If a value has the two-character sequence \\" in it, do not change it. The \\" thing is an escape sequence, and it’s how the value can display the quote (") character. For example, in the above Spanish translation file line, note this embedded text: completo de \\"Importer of Record\\". If you delete the backslash that appears after "de ", then the subsequent quote will indicate the end of the value (remember that a value always ends with a quote), and that would lead to a JSON syntax error. Same problem if you delete the backslash that appears after "Record". So do not delete the backslashes! 😊
+- If a value has the two-character sequence \\" in it, do not change it. The \\" thing is an escape sequence, and it’s how the value can display the quote (") character. For example, in the above Spanish translation file line, note this embedded text: completo de \\"importador del registro\\". If you delete the backslash that appears after "de ", then the subsequent quote will indicate the end of the value (remember that a value always ends with a quote), and that would lead to a JSON syntax error. Same problem if you delete the backslash that appears after "Record". So do not delete the backslashes! 😊
 
 - Do not modify comment lines. Here’s an example comment line:
 ```json
