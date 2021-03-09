@@ -50,7 +50,7 @@ As you know, JSON file syntax includes curly braces (\{\}), quotes, colons, and 
 
 ## Special Cases to Look For
 
-- If a value has the two-character sequence \\" in it, do not change it. The \\" thing is an escape sequence, and it’s how the value can display the quote (") character. For example, in the above Spanish translation file line, note this embedded text: completo de \\"importador del registro\\". If you delete the backslash that appears after "de ", then the subsequent quote will indicate the end of the value (remember that a value always ends with a quote), and that would lead to a JSON syntax error. Same problem if you delete the backslash that appears after "Record". So do not delete the backslashes! 😊
+- If a value has the two-character sequence \\" in it, do not change it. The \\" thing is an escape sequence, and it’s how the value can display the quote (") character. For example, in the above Spanish translation file line, note this embedded text: completo de \\"importador del registro\\". If you delete the backslash that appears after "de," then the subsequent quote will indicate the end of the value (remember that a value always ends with a quote), and that would lead to a JSON syntax error. Same problem if you delete the backslash that appears after "registro." So do not delete the backslashes! 😊
 
 - Do not modify comment lines. Here’s an example comment line:
 ```json
