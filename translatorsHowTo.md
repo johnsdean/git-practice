@@ -61,25 +61,25 @@ As you know, JSON file syntax includes curly braces (\{\}), quotes, colons, and 
 ```json
   "UNIVERSAL-DOWNLOAD_NAME_FILE": "Download File {{index}}",
 ```
-      In the above line, you should translate \"Download File\" to your language’s words, but you should not modify \"index\".
+      In the above line, you should translate "Download File" to your language’s words, but you should not modify "index".
 
 - If a value has a URL in it (typically, a URL has http in it) do not modify the code between the brackets. For example:
 ```json
   "UNIVERSAL-FORM_ERRORS_INVALID_URL": "URL not in format: https://www.example.com/",
 ```
-      In the above line, you should translate \"URL not in format\" to your language’s words, but you should not modify \"https://www.example.com\".
+      In the above line, you should translate "URL not in format" to your language’s words, but you should not modify "https://www.example.com".
 
 - If a value has an HTML tag in it (an HTML tag is a snippet of code surrounded by angled brackets, < >), do not modify the code between the brackets. For example:
 ```json
   "Dap_Donation-PHONE-METHOD-DETAIL": "<p>If you wish to donate by phone, please call <a class=\"sr-bold black-text\" href=\"tel:12025563023\">202-556-3023</a>.</p><p>Thank you!</p>",
 ```
-      In the above line, you should translate \"If you wish to donate by phone, please call\" and \"Thank you\" to your language’s words, but you should not modify the code between the pairs of brackets.
+      In the above line, you should translate "If you wish to donate by phone, please call" and "Thank you" to your language’s words, but you should not modify the code between the pairs of brackets.
 
 - Some languages use characters that are not supported by standard keyboards. Here’s an example key-value line that uses the French character é:
 ```json
   "UNIVERSAL-ENTRIES_TEXT": "Entrées",
 ```
-      The JSON file stores the é using the Unicode value \\u00e9, so here is the equivalent line in the raw JSON file:
+      The JSON file stores the é using the Unicode value \u00e9, so here is the equivalent line in the raw JSON file:
 ```json
   "UNIVERSAL-ENTRIES_TEXT": "Entr\u00e9es",
 ```
