@@ -53,39 +53,40 @@ As you know, JSON file syntax includes curly braces (\{\}), quotes, colons, and 
 - If a value has the two-character sequence \\" in it, do not change it. The \\" thing is an escape sequence, and it’s how the value can display the quote (") character. For example, in the above Spanish translation file line, note this embedded text: completo de \\"importador del registro\\". If you delete the backslash that appears after "de," then the subsequent quote will indicate the end of the value (remember that a value always ends with a quote), and that would lead to a JSON syntax error. Same problem if you delete the backslash that appears after "registro." So do not delete the backslashes! 😊
 
 - Do not modify comment lines. Here’s an example comment line:
-```json
+  ```json
   "---------------- THIS IS A COMMENT actual-comment-goes-here--------": "",
-```
+  ```
+
 - If a value has an interpolation in it (an interpolation is a snippet of programming language code surrounded by two pairs of curly braces), do not modify the text between the curly braces. For example:
 
-```json
+  ```json
   "UNIVERSAL-DOWNLOAD_NAME_FILE": "Download File {{index}}",
-```
-      In the above line, you should translate "Download File" to your language’s words, but you should not modify "index".
+  ```
+  In the above line, you should translate "Download File" to your language’s words, but you should not modify "index".
 
-- If a value has a URL in it (typically, a URL has http in it) do not modify the code between the brackets. For example:
-```json
+- If a value has a URL in it (http://, https://, mailto:, etc.) do not modify the URL. For example:
+  ```json
   "UNIVERSAL-FORM_ERRORS_INVALID_URL": "URL not in format: https://www.example.com/",
-```
-      In the above line, you should translate "URL not in format" to your language’s words, but you should not modify "https://www.example.com".
+  ```
+  In the above line, you should translate "URL not in format" to your language’s words, but you should not modify "https://www.example.com".
 
 - If a value has an HTML tag in it (an HTML tag is a snippet of code surrounded by angled brackets, < >), do not modify the code between the brackets. For example:
-```json
+  ```json
   "Dap_Donation-PHONE-METHOD-DETAIL": "<p>If you wish to donate by phone, please call <a class=\"sr-bold black-text\" href=\"tel:12025563023\">202-556-3023</a>.</p><p>Thank you!</p>",
-```
-      In the above line, you should translate "If you wish to donate by phone, please call" and "Thank you" to your language’s words, but you should not modify the code between the pairs of brackets.
+  ```
+  In the above line, you should translate "If you wish to donate by phone, please call" and "Thank you" to your language’s words, but you should not modify the code between the pairs of brackets.
 
 - Some languages use characters that are not supported by standard keyboards. Here’s an example key-value line that uses the French character é:
-```json
+  ```json
   "UNIVERSAL-ENTRIES_TEXT": "Entrées",
-```
-      The JSON file stores the é using the Unicode value \u00e9, so here is the equivalent line in the raw JSON file:
-```json
+  ```
+  The JSON file stores the é using the Unicode value \u00e9, so here is the equivalent line in the raw JSON file:
+  ```json
   "UNIVERSAL-ENTRIES_TEXT": "Entr\u00e9es",
-```
-      In your JSON editor tool (described below), you would see the above line in the tool’s left panel and you would see the prior line (with é) in the tool’s right panel.
-
-      If you need to enter a character that’s not found on your keyboard, you’ll need to enter it as a Unicode character into your tool’s left panel. You can find all the Unicode symbols at https://unicode.org/charts/. Better yet, go to https://unicodelookup.com and search for the alphabet you’re interested in—Latin (for English, French, Spanish, etc.), Greek, Arabic, and so on.
+  ```
+  In your JSON editor tool (described below), you would see the above line in the tool’s left panel and you would see the prior line (with é) in the tool’s right panel.
+  
+  If you need to enter a character that’s not found on your keyboard, you’ll need to enter it as a Unicode character into your tool’s left panel. You can find all the Unicode symbols at https://unicode.org/charts/. Better yet, go to https://unicodelookup.com and search for the alphabet you’re interested in—Latin (for English, French, Spanish, etc.), Greek, Arabic, and so on.
 
 
 ## Code Beautify’s JSON Viewer Tool
