@@ -43,7 +43,7 @@ You should delete the arrow and translate the value. So if you saw the above lin
 ```json
 "LocationSpecificSurveyComponent-STEP_2_Q_FULL_NAME_OF_THE_IMPORTER_OF_GOODS": "Por favor, lista el nombre completo de \"Importador del registro\" ",
 ```
-Sometimes, you might decide that using the original English value is better than trying to translate. If you're unsure, ask. A guideline (not an absolute rule) is that proper nouns should not be translated. For example, SmartResponse, Infoplease, 50States, and City-Data are proper nouns that appear as values, and you should not translate them.
+Sometimes, you might decide that using the original English value is better than trying to translate. Normally, if a value has a proper noun, you should leave it as is (do not translate the proper noun). But that's a guideline, not an absolute rule. For example, SmartResponse, Infoplease, 50States, and City-Data are proper nouns that appear as values, and you should not translate them. However, Disaster Accountability Project is a proper noun, and you should translate it. If you're unsure about whether to translate, ask.
 
 As you know, JSON file syntax includes curly braces (\{\}), quotes, colons, and commas. Those items should be correct in your original file. Try to avoid introducing errors to those items, but if you do so, your JSON editor tool (described below) should be able to identify such errors, so you can correct them.
 
